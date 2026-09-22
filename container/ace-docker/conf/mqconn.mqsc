@@ -1,0 +1,4 @@
+alter qmgr CONNAUTH('')
+alter qmgr CHLAUTH(DISABLED)
+refresh security
+alter qmgr CCSID(1208)

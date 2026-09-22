@@ -1,0 +1,18 @@
+ResourceManagers:
+  JVM:
+    jvmDebugPort: 12345
+    jvmSystemProperty: '-Dcom.ibm.xtq.processor.overrideSecureProcessing=true'
+Monitoring:
+  MessageFlow:
+    publicationOn: 'active'         # choose 1 of : active|inactive, default inactive
+Events:
+  BusinessEvents: # Monitoring events
+    File:
+      enabled: true            # Set true or false, default false
+      outputFormat: 'json'     # Set comma separated list of one or more of : json,xml. Defaults to 'json'
+      filePath: '/tmp/MonitoringEvents'
+      numberOfFiles: 200
+      sizeOfFile: 100
+    MQ:
+      enabled: false            # Set true or false, default false
+      outputFormat: 'json'      # Set comma separated list of one or more of : json,xml. Defaults to 'xml'

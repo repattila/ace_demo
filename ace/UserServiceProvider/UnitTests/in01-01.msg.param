@@ -1,0 +1,10 @@
+[header]
+qname=TEST_IN
+qmgr=DEVQM
+msgcount=1
+replyq=TEST_OUT
+format="MQSTR   "
+msgtype=1
+codepage=1208
+[filelist]
+in01-01.msg

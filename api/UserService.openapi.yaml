@@ -1,0 +1,135 @@
+openapi: 3.0.3
+info:
+  title: User Service
+  description: >
+    REST equivalent of the UserService WSDL: create users, look them up by
+    id, name, and/or role, and record a last-seen timestamp.
+  version: 1.0.0
+
+servers:
+  - url: http://example.com/api
+
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: Create a new user, identified by name and role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        '400':
+          description: Invalid request body
+
+    get:
+      operationId: getUsers
+      summary: Get users matching any combination of id, name, or role
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >
+            All users matching the supplied filters, each with all of its
+            fields. If no filters are supplied, all users are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}/last-seen:
+    post:
+      operationId: setLastSeen
+      summary: >
+        Record a last-seen date for a user. One-way / fire-and-forget:
+        the server does not return a body, and the client is not expected
+        to wait on any result data.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLastSeenRequest'
+      responses:
+        '202':
+          description: >
+            Accepted. No response body is returned — this is a one-way
+            notification, not a request/response operation.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        role:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - name
+        - role
+
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+      required:
+        - name
+        - role
+
+    CreateUserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+        - id
+
+    SetLastSeenRequest:
+      type: object
+      properties:
+        lastSeen:
+          type: string
+          format: date-time
+      required:
+        - lastSeen

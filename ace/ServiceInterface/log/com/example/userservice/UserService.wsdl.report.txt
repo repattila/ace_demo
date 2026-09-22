@@ -1,0 +1,28 @@
+
+
+Importing file: C:\Users\attila.repasi\Downloads\UserService.wsdl
+
+The WSDL import will proceed with bindings UserServiceBinding.
+Creating wsdl schema document for file:///C:/Users/attila.repasi/Downloads/UserService.wsdl.
+Parsing wsdl binding {http://example.com/userservice}UserServiceBinding.
+Parsing wsdl binding input CreateUser.
+Parsing wsdl binding output CreateUser.
+Parsing wsdl binding input GetUsers.
+Parsing wsdl binding output GetUsers.
+Parsing wsdl binding input SetLastSeen.
+Parsing wsdl binding output SetLastSeen.
+Processing doc style for operation CreateUser.
+Processing doc style for operation GetUsers.
+Processing doc style for operation SetLastSeen.
+Populating WSDL schema UserService.xsd.
+Creating file UserService.xsd in the workspace.
+Creating file UserService_InlineSchema1.xsd in the workspace.
+Copying source WSDL UserService.wsdl to UserService.wsdl.
+
+Elapsed time processing this message definition file: 0.105 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

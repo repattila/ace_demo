@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="UserService"
+    targetNamespace="http://example.com/userservice"
+    xmlns:tns="http://example.com/userservice"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- ======================= TYPES ======================= -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://example.com/userservice"
+                    xmlns:tns="http://example.com/userservice"
+                    elementFormDefault="unqualified">
+
+            <!-- Reusable User type: includes id, name, role, and lastSeen -->
+            <xsd:complexType name="User">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int"/>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="role" type="xsd:string"/>
+                    <xsd:element name="lastSeen" type="xsd:dateTime" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- ===== Operation 1: CreateUser ===== -->
+            <xsd:element name="CreateUserRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="role" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="CreateUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Returns only the id of the newly created user -->
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- ===== Operation 2: GetUsers ===== -->
+            <xsd:element name="GetUsersRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- All filters are optional; any combination can be supplied -->
+                        <xsd:element name="id" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="role" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="GetUsersResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Zero or more matching users, each with all its fields -->
+                        <xsd:element name="user" type="tns:User" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- ===== Operation 3: SetLastSeen (one-way, no response) ===== -->
+            <xsd:element name="SetLastSeenRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                        <xsd:element name="lastSeen" type="xsd:dateTime"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </wsdl:types>
+
+    <!-- ======================= MESSAGES ======================= -->
+    <wsdl:message name="CreateUserRequestMessage">
+        <wsdl:part name="parameters" element="tns:CreateUserRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CreateUserResponseMessage">
+        <wsdl:part name="parameters" element="tns:CreateUserResponse"/>
+    </wsdl:message>
+
+    <wsdl:message name="GetUsersRequestMessage">
+        <wsdl:part name="parameters" element="tns:GetUsersRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetUsersResponseMessage">
+        <wsdl:part name="parameters" element="tns:GetUsersResponse"/>
+    </wsdl:message>
+
+    <!-- No response message for SetLastSeen: it is one-way -->
+    <wsdl:message name="SetLastSeenRequestMessage">
+        <wsdl:part name="parameters" element="tns:SetLastSeenRequest"/>
+    </wsdl:message>
+
+    <!-- ======================= PORT TYPE ======================= -->
+    <wsdl:portType name="UserServicePortType">
+
+        <wsdl:operation name="CreateUser">
+            <wsdl:input message="tns:CreateUserRequestMessage"/>
+            <wsdl:output message="tns:CreateUserResponseMessage"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="GetUsers">
+            <wsdl:input message="tns:GetUsersRequestMessage"/>
+            <wsdl:output message="tns:GetUsersResponseMessage"/>
+        </wsdl:operation>
+
+        <!-- One-way operation: only an input, no output -->
+        <wsdl:operation name="SetLastSeen">
+            <wsdl:input message="tns:SetLastSeenRequestMessage"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <!-- ======================= BINDING ======================= -->
+    <wsdl:binding name="UserServiceBinding" type="tns:UserServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="CreateUser">
+            <soap:operation soapAction="http://example.com/userservice/CreateUser"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="GetUsers">
+            <soap:operation soapAction="http://example.com/userservice/GetUsers"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <!-- One-way binding: input only, no output block, no fault -->
+        <wsdl:operation name="SetLastSeen">
+            <soap:operation soapAction="http://example.com/userservice/SetLastSeen" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <!-- ======================= SERVICE ======================= -->
+    <wsdl:service name="UserService">
+        <wsdl:port name="UserServicePort" binding="tns:UserServiceBinding">
+            <soap:address location="http://example.com/userservice"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,122 @@
+Test starting at: 2026-09-22T09:34:01+02:00
+
+Test file = ./test02.properties
+QM (queue.manager) = DEVQM
+Conn (connection.name) = ADMIN_SVRCONN/TCP/localhost(1414)
+Output Qs (out.queues) = TEST_OUT
+Request Qs (req.queues) = 
+Error Q (error.queue) = TEST_OUT
+Wait time (wait.time) = 1
+Inputs not to update = 
+
+
+Clearing queue: TEST_OUT
+
+(C) Copyright IBM Corp, 2001-2014
+mqcapture.c V3.0 Release version (Dec 28 2018 07:27:22)
+Reading parameters from file ./mqcap.param
+Reading messages from Queue(TEST_OUT) on Qmgr(DEVQM)
+Delimiter length is 5  value(#@#@#)
+opening output file tmp
+connecting to queue manager DEVQM
+opening queue TEST_OUT for input
+Maximum message size that can be read is 4194304
+waitCount=1 parms.waitTime=0
+closing the input queue
+disconnecting from the queue manager
+Total messages 0
+mqcapture program ended
+
+Clearing queue: TEST_OUT
+
+(C) Copyright IBM Corp, 2001-2014
+mqcapture.c V3.0 Release version (Dec 28 2018 07:27:22)
+Reading parameters from file ./mqcap.param
+Reading messages from Queue(TEST_OUT) on Qmgr(DEVQM)
+Delimiter length is 5  value(#@#@#)
+opening output file tmp
+connecting to queue manager DEVQM
+opening queue TEST_OUT for input
+Maximum message size that can be read is 4194304
+waitCount=1 parms.waitTime=0
+closing the input queue
+disconnecting from the queue manager
+Total messages 0
+mqcapture program ended
+
+Updating msg: in02-01.msg
+
+
+Sending msg: in02-01.msg
+
+(C) Copyright IBM Corp, 2001 - 2014
+mqput2.c V3.0 Release version (Dec 28 2018 07:27:22)
+
+278 bytes read from data file in02-01.msg
+Looking for rfh in file
+no rfh found in file
+mqmd format is ("MQSTR   ")
+persistence = 0, code page 1208, encoding 546 expiry -1 priority -1 report 0 feedback 0
+reply to QM (), reply to Queue (TEST_OUT), userid()
+Record format headers (rfh) will be used if found with message data
+Total files read 1
+Total messages found 1
+
+1 messages to be written to queue TEST_IN on queue manager DEVQM
+minimum queue depth 32 max 48 batchsize 25
+initial sleep time 10 tune = 0
+connecting to queue manager DEVQM
+opening queue TEST_IN for output
+First message written at Tue Sep 22 09:34:05 2026
+MQ Timestamp of first message written at 07:34:05
+number on queue after sleep - min 0, max 0
+Last message written at Tue Sep 22 09:34:05 2026
+MQ timestamp of last message written at 07:34:05
+
+Total messages written 1 out of 1
+Total elapsed time in seconds 0.002904
+Total bytes written   278
+Total memory used 663
+
+closing the queue
+closing the inquiry queue
+disconnecting from the queue manager
+MQPUT2 program ended
+
+Waiting for 1sec
+
+
+Getting message from queue: TEST_OUT
+
+(C) Copyright IBM Corp, 2001-2014
+mqcapone.c V3.0 Release version (Dec 28 2018 07:27:23)
+done processing command line arguments parms.err=0
+Reading parameters from file ./mqcap.param
+Reading messages from Queue(TEST_OUT) on Qmgr(DEVQM)
+opening output file tmp
+connecting to queue manager DEVQM
+opening queue TEST_OUT for input
+Maximum message size that can be read is 4194304
+closing the input queue
+disconnecting from the queue manager
+Total messages 0
+mqcapone program ended
+
+Getting message from queue: TEST_OUT
+
+(C) Copyright IBM Corp, 2001-2014
+mqcapone.c V3.0 Release version (Dec 28 2018 07:27:23)
+done processing command line arguments parms.err=0
+Reading parameters from file ./mqcap.param
+Reading messages from Queue(TEST_OUT) on Qmgr(DEVQM)
+opening output file tmp
+connecting to queue manager DEVQM
+opening queue TEST_OUT for input
+Maximum message size that can be read is 4194304
+closing the input queue
+disconnecting from the queue manager
+Total messages 0
+mqcapone program ended
+
+TEST 02 SUCCESSFUL
+

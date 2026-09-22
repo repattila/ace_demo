@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://example.com/userservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://example.com/userservice">
+              
+  <!-- Reusable User type: includes id, name, role, and lastSeen -->
+              
+  <xsd:complexType name="User">
+                    
+    <xsd:sequence>
+                          
+      <xsd:element name="id" type="xsd:int"/>
+                          
+      <xsd:element name="name" type="xsd:string"/>
+                          
+      <xsd:element name="role" type="xsd:string"/>
+                          
+      <xsd:element minOccurs="0" name="lastSeen" type="xsd:dateTime"/>
+                      
+    </xsd:sequence>
+                
+  </xsd:complexType>
+              
+  <!-- ===== Operation 1: CreateUser ===== -->
+              
+  <xsd:element ibmSchExtn:docRoot="true" name="CreateUserRequest">
+                    
+    <xsd:complexType>
+                          
+      <xsd:sequence>
+                                
+        <xsd:element name="name" type="xsd:string"/>
+                                
+        <xsd:element name="role" type="xsd:string"/>
+                            
+      </xsd:sequence>
+                      
+    </xsd:complexType>
+                
+  </xsd:element>
+              
+  <xsd:element ibmSchExtn:docRoot="true" name="CreateUserResponse">
+                    
+    <xsd:complexType>
+                          
+      <xsd:sequence>
+                                
+        <!-- Returns only the id of the newly created user -->
+                                
+        <xsd:element name="id" type="xsd:int"/>
+                            
+      </xsd:sequence>
+                      
+    </xsd:complexType>
+                
+  </xsd:element>
+              
+  <!-- ===== Operation 2: GetUsers ===== -->
+              
+  <xsd:element ibmSchExtn:docRoot="true" name="GetUsersRequest">
+                    
+    <xsd:complexType>
+                          
+      <xsd:sequence>
+                                
+        <!-- All filters are optional; any combination can be supplied -->
+                                
+        <xsd:element minOccurs="0" name="id" type="xsd:int"/>
+                                
+        <xsd:element minOccurs="0" name="name" type="xsd:string"/>
+                                
+        <xsd:element minOccurs="0" name="role" type="xsd:string"/>
+                            
+      </xsd:sequence>
+                      
+    </xsd:complexType>
+                
+  </xsd:element>
+              
+  <xsd:element ibmSchExtn:docRoot="true" name="GetUsersResponse">
+                    
+    <xsd:complexType>
+                          
+      <xsd:sequence>
+                                
+        <!-- Zero or more matching users, each with all its fields -->
+                                
+        <xsd:element maxOccurs="unbounded" minOccurs="0" name="user" type="tns:User"/>
+                            
+      </xsd:sequence>
+                      
+    </xsd:complexType>
+                
+  </xsd:element>
+              
+  <!-- ===== Operation 3: SetLastSeen (one-way, no response) ===== -->
+              
+  <xsd:element ibmSchExtn:docRoot="true" name="SetLastSeenRequest">
+                    
+    <xsd:complexType>
+                          
+      <xsd:sequence>
+                                
+        <xsd:element name="id" type="xsd:int"/>
+                                
+        <xsd:element name="lastSeen" type="xsd:dateTime"/>
+                            
+      </xsd:sequence>
+                      
+    </xsd:complexType>
+                
+  </xsd:element>
+          
+</xsd:schema>

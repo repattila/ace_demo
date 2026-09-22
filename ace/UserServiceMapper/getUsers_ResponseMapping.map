@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" xmlns:map="default" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0">
+    <input path="mbsharedlib://ServiceInterface/UserService_InlineSchema1.xsd"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/UserService.openapi.yaml" var="var1"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://example.com/userservice"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="getUsers_ResponseMapping">
+        <input namespace="http://example.com/userservice" path="mb:msg(GetUsersResponse,assembly,XMLNSC,Properties)" var="ComIbmMessageAssembly_GetUsersResponse"/>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}JSONArray_User" ref="var1"/>
+        </output>
+        <move>
+            <input path="$ComIbmMessageAssembly_GetUsersResponse/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON/Properties"/>
+        </move>
+        <foreach>
+            <input path="$ComIbmMessageAssembly_GetUsersResponse/GetUsersResponse/user"/>
+            <output path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/Item"/>
+            <move>
+                <input path="id"/>
+                <output path="id"/>
+            </move>
+            <move>
+                <input path="name"/>
+                <output path="name"/>
+            </move>
+            <move>
+                <input path="role"/>
+                <output path="role"/>
+            </move>
+            <move>
+                <input path="lastSeen"/>
+                <output path="lastSeen"/>
+            </move>
+        </foreach>
+    </mappingDeclaration>
+</mappingRoot>

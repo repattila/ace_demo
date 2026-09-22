@@ -1,0 +1,56 @@
+
+
+CREATE COMPUTE MODULE UserServiceProvider_ProcessGetUsers
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		
+		DECLARE getUsersRequestRef REFERENCE TO InputRoot.XMLNSC.serviceNS:GetUsersRequest;
+		
+		DECLARE temp ROW;
+		DECLARE reqId CONSTANT INTEGER getUsersRequestRef.id;
+		DECLARE reqName CONSTANT CHARACTER getUsersRequestRef.name;
+		DECLARE reqRole CONSTANT CHARACTER getUsersRequestRef.role;
+		
+		IF reqId IS NOT NULL THEN
+			SET temp.Users[] = SELECT * FROM Database.USERS AS U WHERE U.ID = reqId;
+		ELSEIF reqName IS NOT NULL OR reqRole IS NOT NULL THEN
+			SET temp.Users[] =
+				PASSTHRU(
+					'SELECT * FROM USERS U WHERE U.NAME LIKE ? AND U.ROLE LIKE ?'
+					VALUES (COALESCE(reqName, '') || '%', COALESCE(reqRole, '') || '%')
+				);
+		END IF;
+		
+		DECLARE respRef REFERENCE TO OutputRoot;
+		DECLARE outRef REFERENCE TO OutputRoot;
+		CREATE LASTCHILD OF OutputRoot.XMLNSC AS respRef NAMESPACE serviceNS NAME 'GetUsersResponse';
+
+		FOR user AS temp.Users[] DO
+			CREATE LASTCHILD OF respRef AS outRef NAME 'user';
+			SET outRef.id = user.ID;
+			SET outRef.name = user.NAME;
+			SET outRef.role = user.ROLE;
+
+			IF user.LAST_SEEN IS NOT NULL THEN
+				SET outRef.lastSeen = CAST(user.LAST_SEEN AS TIMESTAMP FORMAT 'yyyy-MM-dd HH:mm:ss.SSSSSS ZZZ');
+			END IF;
+		END FOR;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

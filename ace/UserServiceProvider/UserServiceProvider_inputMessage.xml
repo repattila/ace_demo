@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessagePool xmlns="http://wwww.ibm.com/iib/test/1.0.0">
+    <MQInputMessage timestamp="1789996346251" nodeId="FCMComposite_1_1" name="CreateUserRequest" id="1789996346251-7">
+        <plainText>%3Csoapenv%3AEnvelope+xmlns%3Asoapenv%3D%22http%3A%2F%2Fschemas.xmlsoap.org%2Fsoap%2Fenvelope%2F%22+xmlns%3Auser%3D%22http%3A%2F%2Fexample.com%2Fuserservice%22%3E%0D%0A+++%3Csoapenv%3AHeader%2F%3E%0D%0A+++%3Csoapenv%3ABody%3E%0D%0A++++++%3Cuser%3ACreateUserRequest%3E%0D%0A+++++++++%3Cname%3Etest+user%3C%2Fname%3E%0D%0A+++++++++%3Crole%3Etester%3C%2Frole%3E%0D%0A++++++%3C%2Fuser%3ACreateUserRequest%3E%0D%0A+++%3C%2Fsoapenv%3ABody%3E%0D%0A%3C%2Fsoapenv%3AEnvelope%3E</plainText>
+        <MessageHeader backoutCount="0" characterSet="0" encoding="0" expiry="-1" feedback="0" messageFlags="0" messageType="8" messageSequenceNumber="1" offset="0" originalLength="-1" persistence="2" priority="-1" putApplicationType="0" replyToQueueName="TEST_OUT" report="0"/>
+    </MQInputMessage>
+</MessagePool>
