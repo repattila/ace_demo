@@ -47,10 +47,10 @@ Base URL: `http://example.com/api`
 | `GET` | `/users` | Query users by id, name, and/or role |
 | `POST` | `/users/{id}/last-seen` | Record a last-seen timestamp (fire-and-forget) |
 
-Full OpenAPI definition: [`ace/UserServiceMapper/UserService.openapi.yaml`](../ace/UserServiceMapper/UserService.openapi.yaml)
+Full OpenAPI definition: [`ace/UserServiceMapper/UserService.openapi.yaml`](ace/UserServiceMapper/UserService.openapi.yaml)
 
 ### SOAP (internal MQ transport)
-WSDL: [`ace/ServiceInterface/UserService.wsdl`](../ace/ServiceInterface/UserService.wsdl)  
+WSDL: [`ace/ServiceInterface/UserService.wsdl`](ace/ServiceInterface/UserService.wsdl)  
 Namespace: `http://example.com/userservice`
 
 | Operation | Style |
@@ -70,6 +70,6 @@ Namespace: `http://example.com/userservice`
 
 ## Related Files
 
-- [SoapUI test suite](../soapui/UserService-soapui-project.xml)
-- [REST OpenAPI spec](../api/UserService.openapi.yaml)
-- [WSDL](../api/UserService.wsdl)
+- [SoapUI test suite](soapui/UserService-soapui-project.xml)
+- [REST OpenAPI spec](api/UserService.openapi.yaml)
+- [WSDL](api/UserService.wsdl)
