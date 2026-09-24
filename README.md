@@ -29,12 +29,12 @@ graph LR
 
 | Project | Type | Description |
 |---------|------|-------------|
-| [`ServiceInterface`](ServiceInterface.md) | Shared Library | WSDL + XSD contract shared by all projects |
-| [`UserServiceMapper`](UserServiceMapper.md) | REST API Project | Exposes REST API; maps REST↔SOAP; communicates via MQ |
-| [`UserServiceProvider`](UserServiceProvider.md) | ACE Application | Consumes SOAP/XML from MQ; performs CRUD on Oracle DB |
-| [`UserServicePolicies`](UserServicePolicies.md) | Policy Project | Security profile (BasicAuth) for the integration server |
-| [`container`](container.md) | Docker / Infrastructure | Docker image with ACE + MQ, runtime configuration |
-| [`database`](database.md) | Oracle SQL | Schema definition for the `users` table |
+| [`ServiceInterface`](doc/ServiceInterface.md) | Shared Library | WSDL + XSD contract shared by all projects |
+| [`UserServiceMapper`](doc/UserServiceMapper.md) | REST API Project | Exposes REST API; maps REST↔SOAP; communicates via MQ |
+| [`UserServiceProvider`](doc/UserServiceProvider.md) | ACE Application | Consumes SOAP/XML from MQ; performs CRUD on Oracle DB |
+| [`UserServicePolicies`](doc/UserServicePolicies.md) | Policy Project | Security profile (BasicAuth) for the integration server |
+| [`container`](doc/container.md) | Docker / Infrastructure | Docker image with ACE + MQ, runtime configuration |
+| [`database`](doc/database.md) | Oracle SQL | Schema definition for the `users` table |
 
 ## Interfaces
 
